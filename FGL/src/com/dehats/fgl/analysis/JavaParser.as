@@ -13,16 +13,16 @@ public class JavaParser implements ICodeParser {
 
     public function parseCode(javaCode:String):Array {
 
-        // Remove strings
-        javaCode = javaCode.replace(/"[^"]*"/g, ""); // double quotes
-        javaCode = javaCode.replace(/'[^']*'/g, ""); // simple quote
-
         // Remove comments
         javaCode = javaCode.replace(/\/\/\s*.*\n/g, ""); // comments
         javaCode = javaCode.replace(/\/\*.*\*\//g, "");
         /* one line */
         javaCode = javaCode.replace(/\/\*.*?\*\//sg, "");
         /* multiline */
+
+        // Remove strings
+        javaCode = javaCode.replace(/"[^"]*"/g, ""); // double quotes
+        javaCode = javaCode.replace(/'[^']*'/g, ""); // simple quote
 
 
         //Get package Name
