@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="AIGOR">
+    <configurations>
+      <configuration name="AIGOR" target-platform="Desktop" main-class="Aigor" output-file="AIGOR.swf" output-folder="$SVN_PATH$/JUCASOFT.COM/aigor/out/production/AIGOR">
+        <dependencies target-player="13.0">
+          <entries>
+            <entry module-name="FGL" build-configuration-name="FGL">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="4.12-air13" />
+        </dependencies>
+        <compiler-options />
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Aigor-app.xml" package-file-name="AIGOR" />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="4.12-air13" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="FGL" exported="" />
+  </component>
+</module>
+
