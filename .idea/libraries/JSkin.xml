@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JSkin" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Intellij/JGAME/out/production/JSkin/JSkin.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

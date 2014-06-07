@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+                      xmlns:s="library://ns.adobe.com/flex/spark"
+                      xmlns:ib="it.juca.application.menu.view.components.*"
+                      xmlns:graphics="it.juca.skin.graphics.*"
+                      implements="it.juca.application.menu.model.api.IMenuBar"
+                      top="0" left="0" right="0"
+                      height="30" width="100%">
+
+    <s:HGroup x="0" y="0"
+              paddingLeft="10" paddingRight="10"
+              height="100%" width="100%"
+              verticalAlign="middle"
+              gap="15">
+
+        <ib:IconButton id="newFileButton"
+                       source="{IconLibrary.PAGE_WHITE_ADD}"
+                       toolTip="New File"
+                       command="{NewConfigurationFileCommand}"/>
+        <ib:IconButton id="openButton"
+                       source="{IconLibrary.FOLDER_PAGE_WHITE}"
+                       toolTip="Open"
+                       command="{BrowseForOpenConfigCommand}"/>
+        <ib:IconButton id="saveButton"
+                       source="{IconLibrary.DISK}"
+                       toolTip="Save"
+                       command="{SaveConfigurationFileCommand}"/>
+        <ib:IconButton id="saveAsButton"
+                       source="{IconLibrary.PAGE_SAVE}"
+                       toolTip="Sava as"
+                       command="{SaveAsCommand}"/>
+
+        <graphics:HMenuSeparator/>
+        <s:Label text="Directory"/>
+        <ib:IconButton id="storeDirectoryButton"
+                       source="{IconLibrary.FOLDER_DATABASE}"
+                       toolTip="Show storage directory"
+                       command="{ShowStorageDirectory}"/>
+        <ib:IconButton id="applicationDirectoryButton"
+                       source="{IconLibrary.FOLDER_HEART}"
+                       toolTip="Show application directory"
+                       command="{ShowApplicationDirectory}"/>
+
+        <graphics:HMenuSeparator/>
+        <ib:IconButton id="garbageCollectionButton" source="{IconLibrary.BIN_EMPTY}"
+                       toolTip="Garbage collection"
+                       command="{GCCommand}"/>
+
+        <graphics:HMenuSeparator/>
+
+    </s:HGroup>
+
+    <fx:Script>
+        <![CDATA[
+        import com.famfamfam.silk.IconLibrary;
+
+        import it.juca.application.configfile.controller.BrowseForOpenConfigCommand;
+        import it.juca.application.configfile.controller.NewConfigurationFileCommand;
+        import it.juca.application.configfile.controller.SaveAsCommand;
+        import it.juca.application.configfile.controller.SaveConfigurationFileCommand;
+        import it.juca.application.menu.controller.GCCommand;
+        import it.juca.application.menu.controller.ShowApplicationDirectory;
+        import it.juca.application.menu.controller.ShowStorageDirectory;
+        import it.juca.application.menu.event.SelectMenuEvent;
+
+        private function imageButton1_clickHandler(clazz:Class):void {
+            dispatchEvent(new SelectMenuEvent(SelectMenuEvent.EVENT_SELECTMENUEVENT, clazz));
+        }
+        ]]>
+    </fx:Script>
+</s:SkinnableContainer>

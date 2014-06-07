@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="as3commons-lang-0.3.2" type="flex">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/AIGOR/libs/as3commons-lang-0.3.2.swc!/" />
+      <root url="jar://$PROJECT_DIR$/AIGOR/libs/FamFam_Silk_Icons.swc!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

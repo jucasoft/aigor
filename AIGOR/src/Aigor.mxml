@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
                        xmlns:s="library://ns.adobe.com/flex/spark"
+                       xmlns:components2="it.juca.aigor.application.menu.view.components.*"
+                       implements="it.juca.aigor.application.main.model.api.IMainView,
+                       it.juca.aigor.parser.model.api.IParserContainer,
+                       it.juca.aigor.source.model.api.ISourceContainer,
+                       it.juca.aigor.template.model.api.ITemplateContainer"
+                       preinitialize="onPreinizialize(event)"
                        minWidth="955" minHeight="600">
     <s:layout>
         <s:VerticalLayout/>
@@ -8,50 +14,139 @@
 
     <fx:Script>
 		<![CDATA[
-        import com.dehats.fgl.analysis.JavaParser;
-        import com.dehats.fgl.analysis.PseudoVariable;
-        import com.dehats.fgl.analysis.PseudoClass;
+        import it.juca.aigor.application.main.config.MainContext;
 
-        import mx.collections.ArrayCollection;
+        import mx.events.FlexEvent;
 
-        private function convert(event:MouseEvent):void {
-            var result:* = new JavaParser().parseCode(sourceTextArea.text);
-            ac = new ArrayCollection(PseudoClass(result[0]).properties);
-            ac.filterFunction = filter;
-            ac.refresh();
-            propertyList.dataProvider = ac;
+        import robotlegs.bender.framework.api.IContext;
+
+        import spark.components.Group;
+
+        /*
+         [Embed(source="assets/classiPerTest/MookJavaClass.txt", mimeType="application/octet-stream")] var mookClass:Class;
+
+         [Embed(source="assets/classiPerTest/MookTemplate.txt", mimeType="application/octet-stream")] var mookTemplate:Class;
+
+         private function generate(event:MouseEvent):void {
+         jsonTextArea.text = JSON.stringify(result[0]);
+         var temp:Object = JSON.parse(jsonTextArea.text);
+         //            var temp:Object = new DeTypeAdapter().convertInGenericObject(result[0]);
+
+         destinationTextArea.text = new Mustache().to_html(templateTextArea.text, temp);
+         }
+
+
+
+         private var result:Array;
+
+
+         private function convert(event:MouseEvent):void {
+         result = new JavaParser().parseCode(sourceTextArea.text);
+
+         var pseudoClass:PseudoClass = PseudoClass(result[0]);
+         acP = new ArrayCollection(pseudoClass.properties);
+         acP.filterFunction = filter;
+         acP.refresh();
+         properties.dataProvider = acP;
+
+         acM = new ArrayCollection(pseudoClass.methods);
+         methods.dataProvider = acM;
+
+         classNameLabel.text = pseudoClass.className;
+         packageNameLabel.text = pseudoClass.packageName;
+
+         }
+
+         private var acP:ArrayCollection;
+         private var acM:ArrayCollection;
+
+         private function filter(item:PseudoVariable):Boolean {
+         if (!onlyIsGetSet.selected)
+         return true;
+
+         return item.isGetSet == onlyIsGetSet.selected
+         }
+
+         private function onlyIsGetSet_changeHandler(event:Event):void {
+         acP.refresh();
+         }
+
+         private function propertiesLf(item:PseudoVariable):String {
+         return item.name + ":" + item.type + " isGetSet: " + item.isGetSet;
+         }
+
+         private function methodsLf(item:PseudoClassMethod):String {
+         return " - " + item.name + " arguments: " + item.arguments.toString() + " returnType: " + item.returnType;
+         }
+
+         private function creationCompleteHandler(event:FlexEvent):void {
+         var txt:ByteArray = new mookClass() as ByteArray;
+         sourceTextArea.text = txt.toString();
+
+         var txt2:ByteArray = new mookTemplate() as ByteArray;
+         templateTextArea.text = txt2.toString();
+
+         }*/
+
+        private var _context:IContext;
+
+        private function onPreinizialize(ev:FlexEvent):void {
+            _context = new MainContext(this);
         }
-        private var ac:ArrayCollection;
-        private function lf(item:PseudoVariable):String {
-            return item.name + ":" + item.type + " isGetSet: " + item.isGetSet;
+
+        public function get sourceContainer():Group {
+            return sourceContainerGroup;
         }
 
-        private function filter(item:PseudoVariable):Boolean {
-            if (!onlyIsGetSet.selected)
-                return true;
-
-            return item.isGetSet == onlyIsGetSet.selected
+        /**
+         * Si vuole poter permettere la conversione di una serie di file da un tipo ad un'altro.
+         * Poter salvare le impostazioni precedenti:
+         * - file selezionati
+         * - attributi per ogni classe
+         *
+         *
+         *
+         */
+        public function get templateContainer():Group {
+            return templateContainerGroup;
         }
 
-        private function onlyIsGetSet_changeHandler(event:Event):void {
-            ac.refresh();
+        public function get parserContainer():Group {
+            return parserContainerGroup;
         }
 
         ]]>
 	</fx:Script>
 
     <s:VGroup width="100%" height="100%">
-        <s:HGroup>
-            <s:Button click="convert(event)"/>
+        <components2:MenuBar/>
+        <s:HGroup width="100%" height="100%">
+            <s:VGroup id="sourceContainerGroup"/>
+            <s:VGroup id="templateContainerGroup" width="100%" height="100%"/>
+            <s:VGroup id="parserContainerGroup" height="100%" width="100%"/>
+        </s:HGroup>
+    </s:VGroup>
+<!--        <s:HGroup>
+            <s:Button click="convert(event)" label="Parse"/>
+            <s:Button click="generate(event)" label="Generate"/>
         </s:HGroup>
         <s:HGroup width="100%" height="100%">
             <s:TextArea id="sourceTextArea" width="100%" height="100%"/>
-            <s:VGroup>
+            <s:VGroup visible="false" includeInLayout="false">
+                <s:FormItem label="className">
+                    <s:Label id="classNameLabel"/>
+                </s:FormItem>
+                <s:FormItem label="packageName">
+                    <s:Label id="packageNameLabel"/>
+                </s:FormItem>
                 <s:CheckBox id="onlyIsGetSet" label="onlyIsGetSet" change="onlyIsGetSet_changeHandler(event)"/>
-                <s:List id="propertyList" labelFunction="lf"/>
+                <s:List id="properties" labelFunction="propertiesLf"/>
+                <s:List id="methods" labelFunction="methodsLf"/>
             </s:VGroup>
+            <s:TextArea id="jsonTextArea" width="100%" height="100%"/>
+            <s:TextArea id="templateTextArea" width="100%" height="100%"/>
             <s:TextArea id="destinationTextArea" width="100%" height="100%"/>
         </s:HGroup>
     </s:VGroup>
-
+    <components:MainView/>-->
 </s:WindowedApplication>

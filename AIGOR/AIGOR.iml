@@ -8,6 +8,18 @@
             <entry module-name="FGL" build-configuration-name="FGL">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="robotlegs-framework-v2.2.1" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="as3commons-lang-0.3.2" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="JLibs" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="JSkin" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="4.12-air13" />
         </dependencies>
@@ -27,6 +39,10 @@
     <orderEntry type="jdk" jdkName="4.12-air13" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="FGL" exported="" />
+    <orderEntry type="library" exported="" name="robotlegs-framework-v2.2.1" level="project" />
+    <orderEntry type="library" exported="" name="as3commons-lang-0.3.2" level="project" />
+    <orderEntry type="library" exported="" name="JLibs" level="project" />
+    <orderEntry type="library" exported="" name="JSkin" level="project" />
   </component>
 </module>
 

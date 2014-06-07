@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+          width="100%" height="100%"
+          implements="it.juca.aigor.parser.model.api.IParserView"
+          xmlns:s="library://ns.adobe.com/flex/spark">
+    <s:HGroup>
+        <s:Form>
+            <s:FormItem label="parser class" required="true">
+                <s:ComboBox id="parserComboBox"/>
+            </s:FormItem>
+            <s:FormItem label="extension to" required="true">
+                <s:ComboBox id="extensionComboBox" dataProvider="{new ArrayCollection(['.as','.java','.php'])}"/>
+            </s:FormItem>
+            <s:FormItem>
+                <s:Button label="Parse" enabled="{extensionComboBox.selectedItem}"
+                          click="dispatchEvent(new ParserEvent(ParserEvent.PARSE))"/>
+                <s:Button label="Generate" enabled="{list.dataProvider.length > 0}"
+                          click="dispatchEvent(new ParserEvent(ParserEvent.GENERATE))"/>
+            </s:FormItem>
+        </s:Form>
+    </s:HGroup>
+    <s:List id="list" change="list_changeHandler(event)" labelField="name" width="100%"/>
+    <s:TextArea id="textArea" width="100%" height="100%"/>
+    <fx:Script>
+        <![CDATA[
+        import com.dehats.fgl.analysis.ICodeParser;
+
+        import it.juca.aigor.parser.event.ParserEvent;
+
+        import mx.collections.ArrayCollection;
+
+        import spark.events.IndexChangeEvent;
+
+        public function set parsers(value:ArrayCollection):void {
+            parserComboBox.dataProvider = value;
+            parserComboBox.selectedIndex = 0;
+        }
+
+        public function get selectedParser():ICodeParser {
+            return new parserComboBox.selectedItem.codeParser() as ICodeParser;
+        }
+
+        public function set value(value:String):void {
+            textArea.text = value;
+        }
+
+        public function set files(value:ArrayCollection):void {
+            list.dataProvider = value;
+        }
+
+        private function list_changeHandler(event:IndexChangeEvent):void {
+            var item:Object = Object(list.selectedItem);
+            value = item.data;
+        }
+
+        /*        private function onComplete(evt:Event):void {
+         var file:File = File(evt.currentTarget);
+         file.removeEventListener(Event.COMPLETE, onComplete);
+         var data:ByteArray = file.data;
+         var source:String = data.readUTFBytes(data.bytesAvailable);
+         textArea.text = source;
+         }*/
+
+        public function get selectedExtension():String {
+            return String(extensionComboBox.selectedItem);
+        }
+        ]]>
+    </fx:Script>
+</s:VGroup>

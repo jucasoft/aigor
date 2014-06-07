@@ -13,17 +13,17 @@ public class JavaParser implements ICodeParser {
 
     public function parseCode(javaCode:String):Array {
 
-        // Remove comments
-        javaCode = javaCode.replace(/\/\/\s*.*\n/g, ""); // comments
-        javaCode = javaCode.replace(/\/\*.*\*\//g, "");
         /* one line */
         javaCode = javaCode.replace(/\/\*.*?\*\//sg, "");
         /* multiline */
 
+        // Remove comments
+        javaCode = javaCode.replace(/\/\/\s*.*\n/g, ""); // comments
+        javaCode = javaCode.replace(/\/\*.*\*\//g, "");
+
         // Remove strings
         javaCode = javaCode.replace(/"[^"]*"/g, ""); // double quotes
         javaCode = javaCode.replace(/'[^']*'/g, ""); // simple quote
-
 
         //Get package Name
         var packageName:String = "";
@@ -37,7 +37,7 @@ public class JavaParser implements ICodeParser {
         // Get Class name
         var classDefList:Array = javaCode.match(/class\s+\w+/i);
 
-        if (classDefList.length == 0) return [];
+        if (!classDefList || classDefList.length == 0) return [];
 
 
         var tab:Array = [];
@@ -151,7 +151,8 @@ public class JavaParser implements ICodeParser {
                 //{
                 var _vName:String = StringTools.lowerFirstChar(propName);
                 var _type:String = getASEquivType(met.returnType);
-                var _v:PseudoVariable = new PseudoVariable(_vName, _type)
+                var _isGetSet:Boolean = findSetter(javaClassFile, propName);
+                var _v:PseudoVariable = new PseudoVariable(_vName, _type, _isGetSet);
                 javaClassFile.properties.push(_v);
                 //}
             }
