@@ -14,6 +14,8 @@ import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
 import flash.utils.ByteArray;
 
+import it.juca.aigor.application.utils.MyStringUtils;
+
 import it.juca.aigor.parser.event.ParserEvent;
 import it.juca.aigor.parser.model.ParserProxy;
 import it.juca.aigor.parser.model.api.IParserView;
@@ -54,6 +56,30 @@ public class ParserMediator extends Mediator {
         var parsed:PseudoClass = parser.parseCode(source)[0];
         var jsonS:String = JSON.stringify(parsed);
         var jsonO:Object = JSON.parse(jsonS);
+
+        jsonO.toStaticVarName = function anonim():Function{
+            trace("Object.anonim()");
+            return function anonim2(value:*,render:Function):String{
+                return MyStringUtils.toStaticVarName(render(value));
+            };
+        };
+
+
+        jsonO.lowerCase = function anonim():Function{
+            trace("Object.anonim()");
+            return function anonim2(value:*,render:Function):String{
+                return MyStringUtils.lowerCase(render(value));
+            };
+        };
+
+
+        jsonO.upperCase = function anonim():Function{
+            trace("Object.anonim()");
+            return function anonim2(value:*,render:Function):String{
+                return MyStringUtils.upperCase(render(value));
+            };
+        };
+
         var code:String = new Mustache().to_html(projectProxy.projext.template, jsonO);
         name = name.split(".")[0] + view.selectedExtension;
         var result:Object = {name: name, data: code};

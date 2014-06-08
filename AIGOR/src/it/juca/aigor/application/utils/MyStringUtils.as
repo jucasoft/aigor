@@ -44,7 +44,7 @@ public class MyStringUtils {
         return lines.join("\n").replace("< ?php", "<?php");
     }
 
-    public static function toLowerCase(value:String):String {
+    public static function lowerCase(value:String):String {
         return value.toLowerCase();
     }
 
