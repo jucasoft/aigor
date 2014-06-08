@@ -1,0 +1,13 @@
+package  {{packageName}} {
+
+[RemoteClass (alias="{{packageName}}.{{className}}")]
+public class {{className}} {
+{{#properties}}
+public var {{name}}:{{type}};
+{{/properties}}
+}
+}
+{{className}}//
+{{#toStaticVarName}}{{className}}{{/toStaticVarName}}//
+{{#upperCase}}{{className}}{{/upperCase}}//
+{{#lowerCase}}{{className}}{{/lowerCase}}//
