@@ -9,3 +9,5 @@ The program will serve as an exercise for me to use some libraries:
 - Robotlegs 
 - FGL_FB3 
 - Mustache
+- FamFam_Silk_Icons
+- as3commons-lang
